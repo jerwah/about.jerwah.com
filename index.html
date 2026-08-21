@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<!-- JerWah is how you pronounce my initials. -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jeremy Warren</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f7fa;
+      color: #24292e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #e1e4e8;
+      border-radius: 8px;
+      padding: 2.5rem 3rem;
+      max-width: 560px;
+      width: 100%;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+    .badge {
+      display: inline-block;
+      background: #e8f5e9;
+      color: #2e7d32;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+    .tagline {
+      font-size: 1rem;
+      color: #586069;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+    .links {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.5rem 1.1rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.85; }
+    .btn-primary { background: #2ea44f; color: #fff; }
+    .btn-secondary {
+      background: #fff;
+      color: #24292e;
+      border: 1px solid #d1d5da;
+    }
+    h2 {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #959da5;
+      margin-bottom: 0.9rem;
+    }
+    .projects {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+    .project {
+      padding: 0.9rem 0;
+      border-top: 1px solid #e1e4e8;
+    }
+    .project:first-child { border-top: none; }
+    .project a {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #24292e;
+      text-decoration: none;
+    }
+    .project a:hover { text-decoration: underline; }
+    .project p {
+      font-size: 0.85rem;
+      color: #586069;
+      line-height: 1.5;
+      margin-top: 0.25rem;
+    }
+    .now {
+      font-size: 0.9rem;
+      color: #444d56;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+    .now p { margin-bottom: 0.6rem; }
+    .now p:last-child { margin-bottom: 0; }
+    .now a { color: #2ea44f; }
+    .divider {
+      border: none;
+      border-top: 1px solid #e1e4e8;
+      margin: 1.75rem 0;
+    }
+    .footer {
+      font-size: 0.85rem;
+      color: #586069;
+      text-align: center;
+      line-height: 1.5;
+    }
+    .footer a { color: #2ea44f; text-decoration: none; font-weight: 600; }
+    .footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="badge">About Me</div>
+    <h1>Jeremy Warren (aka JerWah)</h1>
+    <p class="tagline">Finds the right tool for the job. If it doesn't exist, makes it.</p>
+    <div class="links">
+      <a class="btn btn-primary" href="https://www.linkedin.com/in/jeremy-warren-1382611/">LinkedIn</a>
+      <a class="btn btn-secondary" href="https://github.com/jerwah">GitHub</a>
+    </div>
+
+    <h2>Projects</h2>
+    <ul class="projects">
+      <li class="project">
+        <a href="https://jerwah.com">Zabbix Nest Integration</a>
+        <p>Monitors Google Nest thermostats in Zabbix via the Google Smart Device Management API. Free, self-hosted, Google-approved OAuth flow.</p>
+      </li>
+      <li class="project">
+        <a href="https://github.com/jerwah/fix-broken-wemo">fix-broken-wemo</a>
+        <p>A CLI tool to recover and reprovision Belkin WeMo smart switches after a factory reset, built out of necessity after Belkin dropped all support for the devices.</p>
+      </li>
+    </ul>
+
+    <h2>What I'm Working On Now</h2>
+    <div class="now" id="now-content">Loading...</div>
+
+    <hr class="divider">
+    <div class="footer">
+      Resume available on request, reach out via <a href="https://www.linkedin.com/in/jeremy-warren-1382611/">LinkedIn</a>.
+    </div>
+  </div>
+  <script>
+    console.log("Hey! Whatcha looking for?");
+
+    function renderInline(text) {
+      var escaped = text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+      escaped = escaped.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+      escaped = escaped.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2">$1</a>');
+      return escaped;
+    }
+
+    fetch("now.md")
+      .then(function (res) {
+        if (!res.ok) throw new Error("now.md not found");
+        return res.text();
+      })
+      .then(function (text) {
+        var paragraphs = text.trim().split(/\n\s*\n/);
+        var el = document.getElementById("now-content");
+        el.innerHTML = paragraphs.map(function (p) {
+          return "<p>" + renderInline(p.trim()) + "</p>";
+        }).join("");
+      })
+      .catch(function () {
+        document.getElementById("now-content").textContent = "Check back soon.";
+      });
+  </script>
+</body>
+</html>
